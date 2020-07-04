@@ -13,7 +13,34 @@ const asyncHandler = require('./middlewares/async');
 const cors = require('cors');
 
 const app = express();
+
 app.use(express.json());
+
+// sanitize data
+app.use(sanitize());
+
+// set security headers
+app.use(helmet());
+
+// prevent XSS attacks
+app.use(xss());
+
+// rate limit
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000,   // 10 minutes
+  max: 100
+});
+
+app.use(limiter);
+
+// prevent http param pollution
+app.use(hpp());
+
+// enable CORS
+app.use(cors({
+  origin: 'https://mongodb-fileuploads.netlify.app',
+  optionsSuccessStatus: 200
+}))
 
 app.use(methodOverride('_method'));
 
@@ -24,10 +51,6 @@ connectDB();
 const Project = require('./model/Project');
 const project = require('./routes/project');
 
-app.use(cors({
-  origin: 'https://mongodb-fileuploads.netlify.app',
-  optionsSuccessStatus: 200
-}))
 
 // ==========SHIT STARTS HERE
 let conn = mongoose.connection;
