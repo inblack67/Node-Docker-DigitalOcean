@@ -11,6 +11,11 @@ require('colors');
 const errorHandler = require('./middlewares/error');
 const asyncHandler = require('./middlewares/async');
 const cors = require('cors');
+const sanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
 
 const app = express();
 
