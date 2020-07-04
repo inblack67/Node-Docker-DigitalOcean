@@ -10,6 +10,7 @@ const crypto = require('crypto');
 require('colors');
 const errorHandler = require('./middlewares/error');
 const asyncHandler = require('./middlewares/async');
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
@@ -22,6 +23,11 @@ const connectDB = require('./db');
 connectDB();
 const Project = require('./model/Project');
 const project = require('./routes/project');
+
+app.use(cors({
+  origin: 'https://mongodb-fileuploads.netlify.app',
+  optionsSuccessStatus: 200
+}))
 
 // ==========SHIT STARTS HERE
 let conn = mongoose.connection;
