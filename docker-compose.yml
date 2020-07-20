@@ -5,4 +5,4 @@ services:
         restart: always
         build: .
         ports: 
-            - '81:5001'
+            - '80:5001'
