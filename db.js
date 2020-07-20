@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI, {
+        await mongoose.connect('mongodb+srv://ryuwaki:watari@files-axoui.mongodb.net/mongo-multer?retryWrites=true&w=majority', {
             useCreateIndex: true,
             useFindAndModify: false,
             useNewUrlParser: true,
